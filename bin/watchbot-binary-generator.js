@@ -16,7 +16,7 @@ const wbg = { exec };
  */
 const getTagForSha = async (sha) => {
   return new Promise(async (resolve, reject) => {
-    const data = (await wbg.exec('git ls-remote --tags https://github.com/mapbox/ecs-watchbot')).stdout.split('\n');
+    const data = (await wbg.exec('git ls-remote --tags https://github.com/vincentsarago/ecs-watchbot-fargate')).stdout.split('\n');
     if (data.stderr) return reject(data.stderr);
     data.forEach((ref) => {
       ref = ref.split('\t');
@@ -34,7 +34,7 @@ wbg.getTagForSha = getTagForSha;
  */
 const uploadBundle = async () => {
   const s3 = new AWS.S3();
-  const Bucket = 'watchbot-binaries';
+  const Bucket = 'watchbot-fargate-binaries';
 
   const targets = [
     { prefix: 'linux', target: 'node8-linux', pkg: 'watchbot-linux' },
